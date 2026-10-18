@@ -61,6 +61,27 @@ Published separately so you can pull only what you need:
 | [`TABLET`](https://huggingface.co/datasets/CheneyWong/TABLET) | table QA benchmark, 9 subsets |
 | [`TableVerse-5K`](https://huggingface.co/datasets/CheneyWong/TableVerse-5K) | 5K complex Chinese tables |
 | [`SciTSR`](https://huggingface.co/datasets/CheneyWong/SciTSR) | SciTSR train/val/test tarballs |
+| [`rebuilt_table_sources`](https://huggingface.co/datasets/CheneyWong/rebuilt_table_sources) | the four rebuilt sources on their own: OmniDocBench v1.5/v1.6, CC-OCR, OCRBench-v2 tables |
+
+### Rebuilt sources
+
+Four of the sources above (`omnidocbench15`, `omnidocbench16`, `ccocr`,
+`ocrbenchv2`) are not published as image+html pairs and had to be rebuilt from
+upstream annotations:
+
+- **OmniDocBench v1.5 / v1.6** — the release ships page images plus a JSON whose
+  table entries carry a `poly` and an `html` field. Each `category_type ==
+  "table"` entry is cropped with its `poly` plus a 10px margin, and that entry's
+  `html` becomes the ground truth. The public `opendatalab/OmniDocBench`
+  repository publishes only the v1.5 JSON.
+- **CC-OCR** — HTML ships with the release; OTSL is derived from it.
+- **OCRBench-v2** — a general document-VQA benchmark, mostly unusable for table
+  recognition. Of its 700 `table parsing` tasks only the 158 that name an
+  explicit region in the prompt have a croppable table. Ground truth is
+  `answers[0]`; 19 of those rows are Markdown rather than HTML.
+
+Those 1,635 tables are published separately as
+[`rebuilt_table_sources`](https://huggingface.co/datasets/CheneyWong/rebuilt_table_sources).
 
 ## Scoring
 
